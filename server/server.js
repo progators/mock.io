@@ -1,30 +1,23 @@
-var path = require('path');
-var fs = require('fs');
-var express = require('express');
-var codethis = require('./code'); 
+var path = require('path')
+var fs = require('fs')
+var express = require('express')
+var codeutil = require('./util')
+var service = require('./service') 
 var app = express();
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-
-/*app.post('/newcoder', function(req, resp){
-	console.log('inside foo from bodyParser');
-	codethis.compile(req.body.name, resp);
-});
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 app.get('/', function(req, res){
-	console.log(req.body)
-	res.sendFile('foo.html', { root: path.join(__dirname, '../coder') });
-
+	console.log("inside get('/') !!")
+	res.send("Welcome GatorCoders!!")
 });
 
-app.post('/foo', function(req, resp){
-	res.writeHead(200, { 'Content-Type': 'text/plain' });
-    req.on('data', function (chunk) {
-        console.log('GOT DATA!');
-    });
-    res.end('callback(\'{\"msg\": \"OK\"}\')');
-});*/
-
+app.post('/compile/java', function(req, res) {
+	var code = codeutil.getCodeFromRequest(req)
+	var lang = "java"
+	service.start(lang, code, res)
+});
 
 app.listen(5420);
 console.log('Listening on port 5420...');
