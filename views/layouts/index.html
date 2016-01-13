@@ -1,0 +1,81 @@
+<html>
+
+<head>
+  <title>GatorCode</title>
+
+  <!-- 1. Load libraries -->
+  <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+  <script src="node_modules/systemjs/dist/system.src.js"></script>
+  <script src="node_modules/rxjs/bundles/Rx.js"></script>
+  <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="codemirror/lib/codemirror.js"></script>
+  <script src="codemirror/addon/selection/active-line.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="codemirror/lib/codemirror.css" />
+
+  <!-- javascript mode dependencies-->
+  <script src="codemirror/mode/javascript/javascript.js"></script>
+  <!-- add PHP-mode dependencies (replace dependency loading by require.js!) -->
+  <script src="codemirror/mode/xml/xml.js" type="text/javascript" charset="utf-8"></script>
+  <script src="codemirror/mode/htmlmixed/htmlmixed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="codemirror/mode/clike/clike.js" type="text/javascript" charset="utf-8"></script>
+  <script src="codemirror/mode/php/php.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- add SPARQL-mode dependencies -->
+  <script src="codemirror/mode/sparql/sparql.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/css" media="screen">
+    #container { padding: 15px; } h5 { margin: 7px 0px; } #editor1-pane, #editor2-pane { position:relative; display: block; width:
+    600px; height: 200px; border: solid 1px #bbb; } #editor1, #editor2 { font-size: 9pt; } #editor1 .CodeMirror { height:
+    198px; } #editor2 .CodeMirror { height: 198px; }
+  </script>
+
+  <!-- 2. Configure SystemJS -->
+  <script>
+    System.config({
+        packages: {        
+          app: {
+            format: 'register',
+            defaultExtension: 'js'
+          }
+        }
+      });
+      System.import('app/boot')
+            .then(null, console.error.bind(console));
+  </script>
+
+  <script>
+      function submitSourceCode() {
+        $.get("http://localhost:5420/", function(data){
+          console.log("The data is " + data);
+        });
+      }
+   </script>
+
+</head>
+
+<!-- 3. Display the application -->
+<body>
+  <my-app>Loading...</my-app>
+    <!-- <form action="http://localhost:5420/" method="get"> -->
+      <div id="editor1-pane">
+        <textarea id="code" name="code" cols="10" rows="10"></textarea>
+        <button type="button" class="btn btn-primary" onclick="submitSourceCode()">Submit</button>
+        <p id="demo">para!</p>
+      </div>
+    <!-- </form> -->
+  
+  <script type="text/javascript">
+  var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        mode: "text/x-java",     
+        styleActiveLine: true,
+        lineNumbers: true
+      });
+  </script>
+</body>
+
+</html>
