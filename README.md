@@ -1,4 +1,6 @@
-commands to run this:
+commands to install the project:
 
-npm install
-npm run tsc
+```npm install```
+ 
+commands to start the project is 
+```npm start```
