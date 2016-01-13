@@ -5,6 +5,8 @@ var exphbs  = require('express-handlebars');
 var codeutil = require('./routes/util')
 var service = require('./routes/service') 
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -23,5 +25,12 @@ app.post('/compile/java', function(req, res) {
 	service.start(lang, code, res)
 });
 
-app.listen(5420);
-console.log('Listening on port 5420...');
+io.on('connection', function(socket){
+	socket.on('chat message', function(data){
+		console.log(data);
+	});
+});
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
