@@ -55,9 +55,17 @@
 	$(function(){$('#submit').click(
 		function(){
 			socket.emit('chat message', editor.getValue());
+            $("#warnings").empty()
 			return false;
-		}
-	);});
+		});
+
+        socket.on('response', function(resp){
+               $("#warnings").append(resp);
+//                alert(resp);
+        });
+    });
+
+
    </script>
 
 </head>
@@ -79,6 +87,11 @@
         lineNumbers: true
       });
   </script>
+    <div>
+        <p id="warnings">
+
+        </p>
+    </div>
 </body>
 
 </html>

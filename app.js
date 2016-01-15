@@ -26,10 +26,13 @@ app.post('/compile/java', function(req, res) {
 });
 
 io.on('connection', function(socket){
-	socket.on('chat message', function(data){
-		console.log(data);
+	socket.on('chat message', function(src_code){
+		console.log(src_code);
+        var warning = service.start()
+        warning(socket, "java", src_code, "myInput", "myExpectedOutput")
 	});
 });
+
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
