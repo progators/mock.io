@@ -43,7 +43,7 @@ interface Language {
   `]
 })
 export class AppComponent {
-  public title = 'Gator Code';
+  //public title = 'Gator Code';
   public languages = LANGUAGES;
   public selectedLanguage: Language;
   onSelect(language: Language) { 
